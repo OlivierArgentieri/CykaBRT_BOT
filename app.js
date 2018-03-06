@@ -7,6 +7,9 @@ const biguint = require('biguint-format'),
 // Mods
 const Help = require('./mods/help.js');
 
+// Config
+const config = require('./config.json');
+
 // Random Function
 function random (qty) {
     return crypto.randomBytes(qty);
@@ -20,10 +23,10 @@ var general;
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}!`);
     // Print GamePlayed Management
-    bot.user.setGame('Je suis un main Hanzo').catch(console.error);
+    bot.user.setGame(config.bot.playedGame).catch(console.error);
     // Channel Management
-    bot.channels.get("420526968157765633")
-    general = bot.channels.get("215765926392496128")
+    bot.channels.get(config.channel.cyka);
+    general = bot.channels.get(config.channel.general);
 });
 
 bot.on('message', message => {
@@ -38,8 +41,6 @@ bot.on('message', message => {
     // Use command
     let commandUsed = Help.parse(message);
 });
-
-
 
 bot.login(config.bot.token);
 
