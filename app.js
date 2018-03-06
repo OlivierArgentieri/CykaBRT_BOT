@@ -1,9 +1,8 @@
 const Discord = require('discord.js'), 
       biguint = require('biguint-format'),
-      crypto = require('crypto');
+      crypto = require('crypto'),
+      config = require('./config.json');
 const client = new Discord.Client();
-
-
 
 function random (qty) {
     return crypto.randomBytes(qty);
@@ -17,8 +16,8 @@ var general;
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
- client.channels.get("420526968157765633")
- general = client.channels.get("215765926392496128")
+  client.channels.get(config.channel.cyka)
+ general = client.channels.get(config.channel.general)
 
 });
 
@@ -26,7 +25,7 @@ client.on('message', msg => {
     msgToUpper = msg.content.toUpperCase().replace(" ", "");
   if (msgToUpper.includes("BK") || msgToUpper.includes("BURGERKING")) {
       var date = new Date() 
-      m = date.getMonth()
+      m = date.getMonth()   
       //general.send("Ton code KONAR : " + IndiceBK[m] + biguint(random(15), 'dec').substr(1, 5))
       msg.reply("Ton code KONAR : " + IndiceBK[m] + biguint(random(15), 'dec').substr(1, 5) + " :hamburger:")
   }
@@ -35,6 +34,6 @@ client.on('message', msg => {
 
 
 
-client.login("token");
+client.login(config.bot.token);
 
 console.log('start')
