@@ -1,16 +1,16 @@
 {
-  "name": "sigabrt",
+  "name": "cykabrt",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CykaBRT is a Discord Bot, created with Node.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "biguint-format": "^1.0.0",
-    "crypto": "^1.0.1",
     "discord.js": "^11.3.2",
     "npm": "^5.7.1"
   }
