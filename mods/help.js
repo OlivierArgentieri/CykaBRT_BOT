@@ -1,6 +1,7 @@
 /*
   - Help Mod / Use with !help to show commands use in the bot
 */
+const Command = require("./command.js")
 module.exports = class Help extends Command{
   static match(message) {
       return message.content.startsWith('!help');

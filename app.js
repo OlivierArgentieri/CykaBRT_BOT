@@ -23,7 +23,7 @@ var general;
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}!`);
     // Print GamePlayed Management
-    bot.user.setGame(config.bot.playedGame).catch(console.error);
+    bot.user.setActivity(config.bot.playedGame).catch(console.error);
     // Channel Management
     bot.channels.get(config.channel.cyka);
     general = bot.channels.get(config.channel.general);
