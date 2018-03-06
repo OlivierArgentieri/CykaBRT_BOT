@@ -31,9 +31,6 @@ client.on('message', msg => {
       msg.reply("Ton code KONAR : " + IndiceBK[m] + biguint(random(15), 'dec').substr(1, 5) + " :hamburger:")
   }
  
-  if (msg.content === 'poiluSauvage') {
-msg.reply('Arabe');
-  }
 });
 
 
