@@ -11,7 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "biguint-format": "^1.0.0",
+    "casper": "^0.1.1",
     "discord.js": "^11.3.2",
-    "npm": "^5.7.1"
+    "npm": "^5.7.1",
+    "spooky": "^0.2.5"
   }
 }
