@@ -34,8 +34,8 @@ bot.on('message', message => {
     if (messageToUpper.includes("BK") || messageToUpper.includes("BURGERKING")) {
         var date = new Date() 
         currentMonth = date.getMonth()
-        //general.send("Ton code KONAR : " + IndiceBK[currentMonth] + biguint(random(15), 'dec').substr(1, 5))
-        message.reply("Ton code KONAR : " + IndiceBK[currentMonth] + biguint(random(15), 'dec').substr(1, 5) + " :hamburger:")
+        //general.send("Ton code : " + IndiceBK[currentMonth] + biguint(random(15), 'dec').substr(1, 5))
+        message.reply("Ton code : " + IndiceBK[currentMonth] + biguint(random(15), 'dec').substr(1, 5) + " :hamburger:")
     }
 
     // Use command
