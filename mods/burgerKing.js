@@ -11,7 +11,6 @@ module.exports = class BurgerKing{
         if (messageToUpper.includes("BK") || messageToUpper.includes("BURGERKING")) {
             var date = new Date() 
            var currentMonth = date.getMonth()
-            //general.send("Ton code KONAR : " + IndiceBK[currentMonth] + biguint(random(15), 'dec').substr(1, 5))
             message.reply("Ton code : " + IndiceBK[currentMonth] + biguint(this.random(15), 'dec').substr(1, 5) + " :hamburger:")
         }
     };
