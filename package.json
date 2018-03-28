@@ -12,6 +12,7 @@
   "dependencies": {
     "biguint-format": "^1.0.0",
     "discord.js": "^11.3.2",
-    "npm": "^5.7.1"
+    "npm": "^5.7.1",
+    "twitter": "^1.7.1"
   }
 }

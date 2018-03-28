@@ -2,7 +2,7 @@
   - Command Mod / Use to parse message on a command
 */
 module.exports = class Command {
-  static parse (message){
+  static parse(message){
       if(this.match(message)) {
           this.action(message);
           return true;
@@ -14,6 +14,6 @@ module.exports = class Command {
       return false;
   };
   
-  static action (message) {
+  static action(message) {
   };
 }
