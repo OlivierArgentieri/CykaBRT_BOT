@@ -29,7 +29,7 @@ module.exports = class Help extends Command{
       // Create message
       embed.setAuthor("☕ Comment puis-je vous aider ?")
       .setColor(3447003)
-      .setFooter("N'hésitez pas à me recontacter (!help)");
+      .setFooter("(!help)");
 
       // Fill message
       let modsField = "";

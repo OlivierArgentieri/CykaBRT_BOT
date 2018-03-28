@@ -11,22 +11,30 @@ const crypto = require('crypto');
 
 // ---- Mods ----
 let modsConfig = [];
-let UserTweet, HashTagTweet;
+let UserTweet, HashTagTweet, Weather;
 const Help = require('./mods/help.js');
 
 /* Check Config for Mods */
 if(config.twitter_credentials.consumer_key != null) {
     console.log("Loading Twitter_Mod");
-
     UserTweet = require('./mods/twitter/userTweet.js');
     HashTagTweet = require('./mods/twitter/hashtagTweet.js');
     modsConfig.push(UserTweet.help(), HashTagTweet.help());
-
     console.log("Done !");
 } else {
     UserTweet = "error"; 
     HashTagTweet = "error";
     console.log("Require config for Twitter_Mod");
+}
+
+if(config.openweather_credentials.api_key != null) {
+    console.log("Loading Weather_Mod");
+    Weather = require('./mods/weather.js');
+    modsConfig.push(Weather.help());
+    console.log("Done !");
+} else {
+    Weather = "error";
+    console.log("Require config for Weather_Mod");
 }
 
 // Random Function
@@ -56,6 +64,7 @@ bot.on('message', message => {
     let commandUsed = Help.parse(message, modsConfig);
     commandUsed += UserTweet != "error" ? UserTweet.parse(message) : null;
     commandUsed += HashTagTweet != "error" ? HashTagTweet.parse(message) : null;
+    commandUsed += Weather != "error" ? Weather.parse(message) : null;
 });
 
 bot.login(config.bot.token);

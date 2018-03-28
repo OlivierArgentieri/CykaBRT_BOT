@@ -19,6 +19,15 @@ Create a JSON file name config.js to create configuration
     "clientID": "",
     "playedGame": ""
   },
+  "twitter_credentials": {
+    "consumer_key": "",
+    "consumer_secret": "",
+    "access_token_key": "",
+    "access_token_secret": ""
+  },
+  "openweather_credentials": {
+    "api_key": ""
+  },
   "channel": {
     "general": "//channelId",
     "cyka": "//channelId"
