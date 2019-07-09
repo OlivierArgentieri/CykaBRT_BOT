@@ -65,7 +65,7 @@ module.exports = class Help extends Command{
               +"\n \n __Température__ :"
               + "\n Actuelle : **" + wResponse.main.temp + "**"
               + "\n Minimum : **" + wResponse.main.temp_min + "**"
-              + "\n Maximum : **" + wResponse.main.temp_min + "** \n \n";
+              + "\n Maximum : **" + wResponse.main.temp_max + "** \n \n";
               embed.addField(separator, baseField);
     
               // Send Message
