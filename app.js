@@ -14,6 +14,7 @@ BK = require("./mods/BK/BK.js");
 modsConfig.push(BK.help());
 
 purge = require("./mods/purge/purge.js");
+modsConfig.push(purge.help());
 
 /* Check Config for Mods */
 if(config.twitter_credentials.consumer_key != null) {

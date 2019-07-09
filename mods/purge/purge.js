@@ -23,8 +23,6 @@ module.exports = class Help extends Command {
         const command = args.shift().toLowerCase();
 
         
-        if (args[0] != null)
-        
         var numberOfMessage = Number(args[0]);
         if(numberOfMessage != NaN && Math.floor(numberOfMessage) < 10000)
             purge(message, Math.floor(numberOfMessage)).then(message.reply(`suppression de ${Math.floor(numberOfMessage)} messages`));
@@ -38,8 +36,8 @@ module.exports = class Help extends Command {
         return {
             mod: "Purge [ ADMIN || re_admin only ]",
             corps: "**Purge un nombre de message :**"
-                + "\n Exemple : '!purge <number_of_message>' suppression de <number_of_message> messages \n \n"
-                + "\n Valeur de message maximum : 9999",
+                + "\n Exemple : '!purge <number_of_message>' suppression de <number_of_message> messages \n"
+                + "Valeur de message maximum : 9999 \n \n \n",
         };
     };
 
