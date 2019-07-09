@@ -17,7 +17,8 @@ Create a JSON file name config.js to create configuration
     "username": "",
     "clientSecret": "",
     "clientID": "",
-    "playedGame": ""
+    "playedGame": "",
+    "prefix": "!"
   },
   "twitter_credentials": {
     "consumer_key": "",
