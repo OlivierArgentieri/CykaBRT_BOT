@@ -5,14 +5,15 @@ const config = require('./config.json');
 const Discord = require('discord.js'),
       bot = new Discord.Client();
 
-// ---- Libs ----
-const biguint = require('biguint-format');
-const crypto = require('crypto');
-
 // ---- Mods ----
 let modsConfig = [];
-let UserTweet, HashTagTweet, Weather;
+let UserTweet, HashTagTweet, Weather, BK, purge;
 const Help = require('./mods/help.js');
+
+BK = require("./mods/BK/BK.js");
+modsConfig.push(BK.help());
+
+purge = require("./mods/purge/purge.js");
 
 /* Check Config for Mods */
 if(config.twitter_credentials.consumer_key != null) {
@@ -37,13 +38,6 @@ if(config.openweather_credentials.api_key != null) {
     console.log("Require config for Weather_Mod");
 }
 
-// Random Function
-function random (qty) {
-    return crypto.randomBytes(qty);
-}
-
-// BK Month
-const IndiceBK = ["BB", "LS", "JH", "PL", "BK", "WH", "FF", "BF", "CF", "CK", "CB", "VM"];
 
 bot.on('ready', () => {
     console.log(`Logged in as ${bot.user.tag}!`);
@@ -52,19 +46,13 @@ bot.on('ready', () => {
 });
 
 bot.on('message', message => {
-    messageToUpper = message.content.toUpperCase().replace(" ", "");
-    if (messageToUpper.includes("BK") || messageToUpper.includes("BURGERKING")) {
-        var date = new Date() 
-        currentMonth = date.getMonth()
-        //general.send("Ton code : " + IndiceBK[currentMonth] + biguint(random(15), 'dec').substr(1, 5))
-        message.reply("Ton code : " + IndiceBK[currentMonth] + biguint(random(15), 'dec').substr(1, 5) + " :hamburger:")
-    }
-
     // Use commands
     let commandUsed = Help.parse(message, modsConfig);
     commandUsed += UserTweet != "error" ? UserTweet.parse(message) : null;
     commandUsed += HashTagTweet != "error" ? HashTagTweet.parse(message) : null;
     commandUsed += Weather != "error" ? Weather.parse(message) : null;
+    commandUsed += BK.parse(message);
+    commandUsed += purge.parse(message);
 });
 
 bot.login(config.bot.token);
