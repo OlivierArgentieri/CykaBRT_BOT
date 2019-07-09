@@ -47,7 +47,7 @@ async function purge(message, numberOfMessage) {
     let fetched;
 
     var quotient = Math.floor(numberOfMessage / 100);
-    var remainder = numberOfMessage % 99;
+    var remainder = numberOfMessage % 100;
 
     for (var i = 0; i < quotient; i++) {
         fetched = await message.channel.fetchMessages({ limit: 100 });
