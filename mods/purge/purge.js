@@ -22,12 +22,12 @@ module.exports = class Help extends Command {
         const args = message.content.slice(config.bot.prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
 
-        
+
         var numberOfMessage = Number(args[0]);
-        if(numberOfMessage != NaN && Math.floor(numberOfMessage) < 10000)
-            purge(message, Math.floor(numberOfMessage)).then(message.reply(`suppression de ${Math.floor(numberOfMessage)} messages`));
+        if (numberOfMessage != NaN && Math.floor(numberOfMessage) < 10000)
+            purge(message, Math.floor(numberOfMessage)).then(message.reply(`suppression de ${Math.floor(numberOfMessage)} messages`).then(msg => { msg.delete(10000); }));
         else {
-            message.reply("Valeur incorrect utiliser le !help")
+            message.reply("Valeur incorrect utiliser le !help").then(msg => { msg.delete(10000); });
         }
         // message.reply("Ton code : " + IndiceBK[currentMonth] + biguint(random(15), 'dec').substr(1, 5) + " :hamburger:")
     };
