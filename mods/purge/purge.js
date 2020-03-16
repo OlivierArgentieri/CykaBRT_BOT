@@ -10,7 +10,7 @@ module.exports = class Help extends Command {
 
     static match(message) {
         if (message.content.startsWith('!purge')) {
-            if (!(message.member.roles.some(r => ["ADMIN", "re_admin"].includes(r.name)))) {
+            if (!(message.member.roles.some(r => ["ADMIN", "re_admin", "Team_Uno"].includes(r.name)))) {
                 message.reply("Permiffions insuffisante");
                 return false;
             }
@@ -25,7 +25,10 @@ module.exports = class Help extends Command {
 
         var numberOfMessage = Number(args[0]);
         if (numberOfMessage != NaN && Math.floor(numberOfMessage) < 10000)
-            purge(message, Math.floor(numberOfMessage)).then(message.reply(`suppression de ${Math.floor(numberOfMessage)} messages`).then(msg => { msg.delete(10000); }));
+            purge(message, Math.floor(numberOfMessage))
+            .then(message.reply(`suppression de ${Math.floor(numberOfMessage)} messages`)
+                .then(msg => { msg.delete(10000); }))
+                .catch(msg => {console.log(msg)});
         else {
             message.reply("Valeur incorrect utiliser le !help").then(msg => { msg.delete(10000); });
         }
