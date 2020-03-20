@@ -7,7 +7,8 @@ const Discord = require('discord.js'),
 
 // ---- Mods ----
 let modsConfig = [];
-let UserTweet, HashTagTweet, Weather, BK, purge;
+let UserTweet, HashTagTweet, Weather, BK, purge, xpSystem;
+
 const Help = require('./mods/help.js');
 
 BK = require("./mods/BK/BK.js");
@@ -15,6 +16,9 @@ modsConfig.push(BK.help());
 
 purge = require("./mods/purge/purge.js");
 modsConfig.push(purge.help());
+
+xpSystem = require("./mods/xpSystem/xpSystem.js");
+
 
 /* Check Config for Mods */
 if(config.twitter_credentials.consumer_key != null) {
@@ -54,6 +58,7 @@ bot.on('message', message => {
     commandUsed += Weather != "error" ? Weather.parse(message) : null;
     commandUsed += BK.parse(message);
     commandUsed += purge.parse(message);
+    commandUsed += xpSystem.parse(message);
 });
 
 bot.login(config.bot.token);
