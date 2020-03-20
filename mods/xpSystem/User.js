@@ -4,11 +4,11 @@ class User
     userID;
     presenceValue;
 
-    constructor(username, userID)
+    constructor(username, userID, presenceValue)
     {
         this.username = username;
         this.userID = userID;
-        this.presenceValue = 0;
+        this.presenceValue = presenceValue;
     }
 
     serialize() {

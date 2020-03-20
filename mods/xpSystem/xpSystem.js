@@ -37,14 +37,17 @@ async function main(message)
         await  listDatabases(client);
  
 
-        if(await findOneListingByUserID(client, "Yatangaki", "Yatangaki", message.member.user.id) != 0)
+        if(await findOneListingByUserID(client, config.MongoDB.nameBDD, config.MongoDB.collectionName, message.member.user.id) != 0)
         {
-            
+            console.log(result);
+            var _testUSer = new User(result.username, result.userID, result.presenceValue);
+            _testUSer.presenceValue +=1;
+            await updateListingByUserID(client, config.MongoDB.nameBDD, config.MongoDB.collectionName, _testUSer.userID, _testUSer.serialize());
         }
         else
         {
-            var _testUSer = new User(message.member.user.username, message.member.user.id);
-            await createListing(client, "Yatangaki", "Yatangaki", _testUSer.serialize());
+            var _testUSer = new User(message.member.user.username, message.member.user.id,0);
+            await createListing(client, config.MongoDB.nameBDD, config.MongoDB.collectionName, _testUSer.serialize());
         }
       
 
@@ -65,7 +68,7 @@ async function listDatabases(client){
 };
 
 
-// ---  CRUD
+// -------  CRUD
 
 // Create
 async function createListing(client, databaseName, collectionName, newListing ){
@@ -75,18 +78,27 @@ async function createListing(client, databaseName, collectionName, newListing ){
 
 // Read
 async function findOneListingByUserID(client, databaseName, collectionName, userIDvalue) {
-    result = await client.db(databaseName).collection(collectionName)
-                        .findOne({ userID: userIDvalue });
+    result = await client.db(databaseName).collection(collectionName).findOne({ userID: userIDvalue });
 
-    if (result) {
+    if (result) 
+    {
         console.log(`Found a listing in the collection with the name '${userIDvalue}':`);
-        console.log(result);
+
         return result;
-    } else {
+    } 
+    else 
+    {
         console.log(`No listings found with the name '${userIDvalue}'`);
         console.log("Not Found");
-
         return 0;
     }
 }
 
+// Update
+async function updateListingByUserID(client,  databaseName, collectionName, userIDvalue, updatedListing) 
+{
+    result = await client.db(databaseName).collection(collectionName).updateOne({ userID: userIDvalue }, { $set: updatedListing });
+
+    console.log(`${result.matchedCount} document(s) matched the query criteria.`);
+    console.log(`${result.modifiedCount} document(s) was/were updated.`);
+}
