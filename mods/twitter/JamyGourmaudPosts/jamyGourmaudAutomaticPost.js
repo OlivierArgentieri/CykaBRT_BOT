@@ -62,7 +62,7 @@ module.exports = class JG_AutomaticPost {
             {
                 console.log(post.id);
                 if (await JG_Repository.findOneListingByPostID(client, config.MongoDB.nameBDD, config.MongoDB.collectionName[1], post.id) != 0) {
-                    
+                    console.log("Already Post");
                 }
                 else {
                     discord_client.channels.get("690136418114469914").send(post.url); // test channel bot id :  690205415472103559
