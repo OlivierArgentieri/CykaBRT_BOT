@@ -1,35 +1,38 @@
 
-// --------------- Repository Function
-async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
- 
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
+
+module.exports = class JG_Repository {
 
 
-// -------  CRUD
+    // --------------- Repository Function
+    static async listDatabases(client) {
+        var databasesList = await client.db().admin().listDatabases();
 
-// Create
-async function createListing(_client, _databaseName, _collectionName, newListing ){
-    const result = await _client.db(_databaseName).collection(_collectionName).insertOne(newListing);
-    console.log(`New listing created in  with the following id: ${result.insertedId}`);
-}
+        console.log("Databases:");
+        databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+    };
 
-// Read
-async function findOneListingByPostID(_client, _databaseName, _collectionName, _postID) {
-    result = await _client.db(_databaseName).collection(_collectionName).findOne({ postID: _postID });
 
-    if (result) 
-    {
-        console.log(`Found a listing in the collection with the ID '${_postID}':`);
+    // -------  CRUD
 
-        return result;
-    } 
-    else 
-    {
-        console.log(`No listings found with the ID '${_postID}'`);
-        console.log("Not Found");
-        return 0;
+    // Create
+    static async createListing(_client, _databaseName, _collectionName, newListing) {
+        const result = await _client.db(_databaseName).collection(_collectionName).insertOne(newListing);
+        console.log(`New listing created in  with the following id: ${result.insertedId}`);
     }
-}
+
+    // Read
+    static async findOneListingByPostID(_client, _databaseName, _collectionName, _postID) {
+        const result = await _client.db(_databaseName).collection(_collectionName).findOne({ id: _postID });
+
+        if (result) {
+            console.log(`Found a listing in the collection with the ID '${_postID}':`);
+
+            return result;
+        }
+        else {
+            console.log(`No listings found with the ID '${_postID}'`);
+            console.log("Not Found");
+            return 0;
+        }
+    }
+};

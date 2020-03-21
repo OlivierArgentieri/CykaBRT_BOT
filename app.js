@@ -5,6 +5,9 @@ const config = require('./config.json');
 const Discord = require('discord.js'),
       bot = new Discord.Client();
 
+// ---- Node CRON -----
+var cron = require('node-cron');
+
 // ---- Mods ----
 let modsConfig = [];
 let UserTweet, HashTagTweet, Weather, BK, purge, xpSystem, jgPost;
@@ -18,7 +21,7 @@ purge = require("./mods/purge/purge.js");
 modsConfig.push(purge.help());
 
 xpSystem = require("./mods/xpSystem/xpSystem.js");
-jgPost = require("./mods/twitter/JamyGourmaudPosts/jamyGourmaudAutomaticPost.js");
+JG_AutomaticPost = require("./mods/twitter/JamyGourmaudPosts/jamyGourmaudAutomaticPost.js");
 
 
 /* Check Config for Mods */
@@ -60,9 +63,16 @@ bot.on('message', message => {
     commandUsed += BK.parse(message);
     commandUsed += purge.parse(message);
     commandUsed += xpSystem.parse(message);
-    commandUsed += jgPost.parse(message);
+    //commandUsed += JG_AutomaticPost.parse(message);
 });
 
 bot.login(config.bot.token);
 
+
 console.log('Bot has been Started !')
+
+cron.schedule('* */2 * * *', () => {
+    JG_AutomaticPost.main(bot);
+    console.log('running task for JamyGourmaud Post');
+  });
+console.log('Schedule job for JamyGourmaud Post Created ! (running every 2hours)');

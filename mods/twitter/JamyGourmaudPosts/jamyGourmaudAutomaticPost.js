@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 const JG_Post = require('./jamyGourmaudPost.js');
 const config = require('../../../config.json');
-const repository = require('./jamyGourmaudRepository');
+const JG_Repository = require('./jamyGourmaudRepository');
 
 // init twitter api 
 const Twitter = require('twitter');
@@ -28,54 +28,53 @@ module.exports = class Command {
 }
 
 
-async function main() {
+module.exports = class JG_AutomaticPost {
+   static async main(discord_client) {
 
-    const jamyGourmaud_ID = 4127289801;
-    var Posts = [];
-    twitterApi.get('statuses/user_timeline', {user_id: jamyGourmaud_ID, tweet_mode: "extended"}, function(err, data, response) {
+        const jamyGourmaud_ID = 4127289801;
+        var Posts = [];
+        twitterApi.get('statuses/user_timeline', { user_id: jamyGourmaud_ID, tweet_mode: "extended" }, function (err, data, response) {
 
-        if(err) return;
+            if (err) return;
 
-        data.forEach(e => {
-            if(e.full_text.toUpperCase().includes('CONFINEMENT') && e.full_text.toUpperCase().includes('JOUR'))
+            data.forEach(e => {
+                if (e.full_text.toUpperCase().includes('CONFINEMENT') && e.full_text.toUpperCase().includes('JOUR')) {
+                    Posts.push(new JG_Post(e.id, e.full_text, e.entities.media[0].expanded_url));
+                }
+            });
+
+
+
+        });
+
+
+        const uri = "mongodb+srv://" + config.MongoDB.username + ":" + config.MongoDB.password + "@" + config.MongoDB.urlBDD + "?retryWrites=true&w=majority";
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+        try {
+            // Connect to the MongoDB cluster
+            await client.connect();
+
+            // Make the appropriate DB calls
+            await JG_Repository.listDatabases(client);
+
+            for(const post of Posts)
             {
-                
-                Posts.push(new JG_Post(e.id, e.full_text, e.entities.media[0].expanded_url));
-                
+                console.log(post.id);
+                if (await JG_Repository.findOneListingByPostID(client, config.MongoDB.nameBDD, config.MongoDB.collectionName[1], post.id) != 0) {
+                    
+                }
+                else {
+                    discord_client.channels.get("690136418114469914").send(post.url); // test channel bot id :  690205415472103559
+                    await JG_Repository.createListing(client, config.MongoDB.nameBDD, config.MongoDB.collectionName[1], post.serialize());
+                }
             }
-        });
-        
-     
-     /**/ Posts.forEach(e => {
-            console.log(e.serialize());
-        });
-    });
+          
 
-    /*
-    const uri = "mongodb+srv://"+config.MongoDB.username+":" +config.MongoDB.password+ "@" + config.MongoDB.urlBDD+"?retryWrites=true&w=majority";
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
-
-     try {
-        // Connect to the MongoDB cluster
-        await client.connect();
- 
-        // Make the appropriate DB calls
-        await  listDatabases(client);
- 
-
-        if(await repository.findOneListingByPostID(client, config.MongoDB.nameBDD, config.MongoDB.collectionName[1], message.member.user.id) != 0)
-        {
+        } catch (e) {
+            console.error(e);
+        } finally {
+            await client.close();
         }
-        else
-        {
-            var _testUSer = new User(message.member.user.username, message.member.user.id,0);
-            await createListing(client, config.MongoDB.nameBDD, config.MongoDB.collectionName[0], _testUSer.serialize());
-        }
-      
-
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }    */
+    }
 }
