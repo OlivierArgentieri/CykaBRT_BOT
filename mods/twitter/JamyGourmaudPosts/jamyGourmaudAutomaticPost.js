@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb');
-const User = require('./jamyGourmaudPost.js');
+const JG_Post = require('./jamyGourmaudPost.js');
 const config = require('../../../config.json');
 const repository = require('./jamyGourmaudRepository');
 
@@ -31,10 +31,24 @@ module.exports = class Command {
 async function main() {
 
     const jamyGourmaud_ID = 4127289801;
-    JG_Post = null;
-    twitterApi.get('statuses/user_timeline', {user_id: jamyGourmaud_ID}, function(err, data, response) {
+    var Posts = [];
+    twitterApi.get('statuses/user_timeline', {user_id: jamyGourmaud_ID, tweet_mode: "extended"}, function(err, data, response) {
+
         if(err) return;
-        console.log(data[0].text);
+
+        data.forEach(e => {
+            if(e.full_text.toUpperCase().includes('CONFINEMENT') && e.full_text.toUpperCase().includes('JOUR'))
+            {
+                
+                Posts.push(new JG_Post(e.id, e.full_text, e.entities.media[0].expanded_url));
+                
+            }
+        });
+        
+     
+     /**/ Posts.forEach(e => {
+            console.log(e.serialize());
+        });
     });
 
     /*

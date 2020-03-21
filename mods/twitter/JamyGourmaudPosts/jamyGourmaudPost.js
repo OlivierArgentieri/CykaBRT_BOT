@@ -6,7 +6,7 @@ class JG_Post
 
     constructor(_id, _text, _url)
     {
-        this.id = id;
+        this.id = _id;
         this.text = _text;
         this.url = _url;
     }
@@ -14,9 +14,9 @@ class JG_Post
     serialize() {
 
         return {
-            id: this.username, 
-            text: this.userID, 
-            url: this.presenceValue
+            id: this.id, 
+            text: this.text, 
+            url: this.url
             }
     }
 }
