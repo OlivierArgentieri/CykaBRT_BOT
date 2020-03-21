@@ -7,7 +7,7 @@ const Discord = require('discord.js'),
 
 // ---- Mods ----
 let modsConfig = [];
-let UserTweet, HashTagTweet, Weather, BK, purge, xpSystem;
+let UserTweet, HashTagTweet, Weather, BK, purge, xpSystem, jgPost;
 
 const Help = require('./mods/help.js');
 
@@ -18,6 +18,7 @@ purge = require("./mods/purge/purge.js");
 modsConfig.push(purge.help());
 
 xpSystem = require("./mods/xpSystem/xpSystem.js");
+jgPost = require("./mods/twitter/JamyGourmaudPosts/jamyGourmaudAutomaticPost.js");
 
 
 /* Check Config for Mods */
@@ -59,6 +60,7 @@ bot.on('message', message => {
     commandUsed += BK.parse(message);
     commandUsed += purge.parse(message);
     commandUsed += xpSystem.parse(message);
+    commandUsed += jgPost.parse(message);
 });
 
 bot.login(config.bot.token);

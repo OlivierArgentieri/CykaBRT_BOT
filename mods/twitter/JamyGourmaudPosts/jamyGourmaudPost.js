@@ -1,4 +1,4 @@
-class JD_Post
+class JG_Post
 {
     id;
     text;
@@ -21,4 +21,4 @@ class JD_Post
     }
 }
 
-module.exports = JD_Post;
+module.exports = JG_Post;
