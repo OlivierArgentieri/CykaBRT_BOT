@@ -10,7 +10,7 @@ module.exports = class Help extends Command {
 
     static match(message) {
         if (message.content.startsWith('!purge')) {
-            if (!(message.member.roles.some(r => ["ADMIN", "re_admin", "Team_Uno"].includes(r.name)))) {
+            if (!(message.member.roles.some(r => ["Admin", "Modo"].includes(r.name)))) {
                 message.reply("Permiffions insuffisante");
                 return false;
             }

@@ -1,6 +1,7 @@
 const {MongoClient} = require('mongodb');
 const User = require('./User.js');
 const config = require('../../config.json');
+
 module.exports = class Command {
     static parse(message){
         if(this.match(message)) {
@@ -37,17 +38,17 @@ async function main(message)
         await  listDatabases(client);
  
 
-        if(await findOneListingByUserID(client, config.MongoDB.nameBDD, config.MongoDB.collectionName, message.member.user.id) != 0)
+        if(await findOneListingByUserID(client, config.MongoDB.nameBDD, config.MongoDB.collectionName[0], message.member.user.id) != 0)
         {
             console.log(result);
             var _testUSer = new User(result.username, result.userID, result.presenceValue);
             _testUSer.presenceValue +=1;
-            await updateListingByUserID(client, config.MongoDB.nameBDD, config.MongoDB.collectionName, _testUSer.userID, _testUSer.serialize());
+            await updateListingByUserID(client, config.MongoDB.nameBDD, config.MongoDB.collectionName[0], _testUSer.userID, _testUSer.serialize());
         }
         else
         {
             var _testUSer = new User(message.member.user.username, message.member.user.id,0);
-            await createListing(client, config.MongoDB.nameBDD, config.MongoDB.collectionName, _testUSer.serialize());
+            await createListing(client, config.MongoDB.nameBDD, config.MongoDB.collectionName[0], _testUSer.serialize());
         }
       
 
@@ -61,7 +62,7 @@ async function main(message)
 
 // --------------- Repository Function
 async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
+    var databasesList = await client.db().admin().listDatabases();
  
     console.log("Databases:");
     databasesList.databases.forEach(db => console.log(` - ${db.name}`));
