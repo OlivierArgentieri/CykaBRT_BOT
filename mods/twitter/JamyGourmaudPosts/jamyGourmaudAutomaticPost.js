@@ -65,7 +65,7 @@ module.exports = class JG_AutomaticPost {
                     console.log("Already Post");
                 }
                 else {
-                    discord_client.channels.get("690136418114469914").send(post.url); // test channel bot id :  690205415472103559
+                    discord_client.channels.get(config.channel.jamyChannel).send(post.url); // test channel bot id :  690205415472103559
                     await JG_Repository.createListing(client, config.MongoDB.nameBDD, config.MongoDB.collectionName[1], post.serialize());
                 }
             }

@@ -17,7 +17,7 @@ module.exports = class Help extends Command {
 
     static match(message) {
         let messageToUpper = message.content.toUpperCase().replace(" ", "");
-        return messageToUpper.includes("BK") || messageToUpper.includes("BURGERKING");
+        return !messageToUpper.includes("HTTP") && messageToUpper.includes("BK") || messageToUpper.includes("BURGERKING") ;
     };
 
     static action(message) {

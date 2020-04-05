@@ -71,8 +71,9 @@ bot.login(config.bot.token);
 
 console.log('Bot has been Started !')
 
-cron.schedule('* */5 * * *', () => {
+JG_AutomaticPost.main(bot);
+cron.schedule('0 * * * *', () => {
     JG_AutomaticPost.main(bot);
     console.log('running task for JamyGourmaud Post');
   });
-console.log('Schedule job for JamyGourmaud Post Created ! (running every 5 hours)');
+console.log('Schedule job for JamyGourmaud Post Created ! (running every 1 hours)');
